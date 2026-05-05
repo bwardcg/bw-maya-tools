@@ -6,3 +6,6 @@ Thumbs.db
 *.swp
 *.bak
 *~
+*.sublime-project
+*.sublime-workspace
+pyrightconfig.json
