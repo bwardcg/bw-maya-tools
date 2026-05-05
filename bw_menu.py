@@ -13,7 +13,7 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 
-ROOT_DIR = 'D:/users/anzib/Documents/maya/scripts/bw_tools/bw_Menu'
+ROOT_DIR = os.path.join(os.path.dirname(__file__), 'bw_Menu')
 
 
 def build(root_dir = None):
