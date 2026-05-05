@@ -1,0 +1,287 @@
+global proc shelf_bw_Tools () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Snap selected to First Sel Ctrl" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "snap" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Snap" 
+        -overlayLabelColor 1 1 1 
+        -overlayLabelBackColor 0 0 0 0 
+        -image "bw_snap.png" 
+        -image1 "bw_snap.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from bw_tools.bw_Menu.snap import bw_snap\nbw_snap.run()\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "snap_A-B" ( "from bw_tools.bw_Menu.snap import snap_A-B\nsnap_A-B.run()" )
+        -mip 0
+        -mi "cycle_objs" ( "from bw_tools.bw_Menu.snap import cycle_objs\ncycle_objs.run()\n" )
+        -mip 1
+        -mi "snap_locs" ( "from bw_tools.bw_Menu.snap import snap_locs\nsnap_locs.run()" )
+        -mip 2
+        -mi "match" ( "from bw_tools.bw_Menu.snap import match\nmatch.run()\n" )
+        -mip 3
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Open Anim Copy UI" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "anim" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Anim" 
+        -overlayLabelColor 1 1 1 
+        -overlayLabelBackColor 0 0 0 0 
+        -image "bw_copy.png" 
+        -image1 "bw_copy.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from bw_tools.bw_Menu.anim import copy_anim_UI\ncopy_anim_UI.run()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "reset to defaults" ( "from bw_tools.bw_Menu.anim import reset_to_defaults\nreset_to_defaults.run()\n" )
+        -mip 0
+        -mi "set defaults" ( "from bw_tools.bw_Menu.modify import set_defaults\nset_defaults.run()\n" )
+        -mip 1
+        -mi "keys randomizer" ( "from bw_tools.bw_Menu.rig import randomize_keys\nrandomize_keys.run()\n" )
+        -mip 2
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Plot an objects animation as a curve" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "plot" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Plot" 
+        -overlayLabelColor 1 1 1 
+        -overlayLabelBackColor 0 0 0 0 
+        -image "bw_path.png" 
+        -image1 "bw_path.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from bw_tools.bw_Menu.anim import plot_path\nplot_path.run()\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "record_mouse" ( "from bw_tools.bw_Menu.anim import record_mouse\nrecord_mouse.run()" )
+        -mip 0
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Parent Constrain Nulls to Selected" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "constrain" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Cons" 
+        -overlayLabelColor 1 1 1 
+        -overlayLabelBackColor 0 0 0 0 
+        -image "bw_constrain.png" 
+        -image1 "bw_constrain.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from bw_tools.bw_Menu.rig import const_nulls_parent\nconst_nulls_parent.run()\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "Point Constrain Nulls" ( "from bw_tools.bw_Menu.rig import const_nulls_point\nconst_nulls_point.run()" )
+        -mip 0
+        -mi "Make Follicles" ( "from bw_tools.bw_Menu.rig import make_follicles\nmake_follicles.run()\n" )
+        -mip 1
+        -mi "Select Constraining" ( "from bw_tools.bw_Menu.rig import select_const_objs\nselect_const_objs.run()" )
+        -mip 2
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Modify existing objects" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "modify" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Mod" 
+        -overlayLabelColor 1 1 1 
+        -overlayLabelBackColor 0 0 0 0 
+        -image "bw_modify.png" 
+        -image1 "bw_modify.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from bw_tools.bw_Menu.modify import const_nulls_parent\nconst_nulls_parent.run()\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "make names unique" ( "from bw_tools.bw_Menu.modify import make_names_unique\nmake_names_unique.run()" )
+        -mip 0
+        -mi "unlock xform attrs" ( "from bw_tools.bw_Menu.modify import unlock_transform\nunlock_transform.run()\n" )
+        -mip 1
+        -mi "zero local pivots" ( "from bw_tools.bw_Menu.modify import reset_pivots\nreset_pivots.run()" )
+        -mip 2
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Modify existing objects" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "color" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Clr" 
+        -overlayLabelColor 1 1 1 
+        -overlayLabelBackColor 0 0 0 0 
+        -image "bw_color.png" 
+        -image1 "bw_color.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from bw_tools.bw_Menu.color import wf_Auto\nwf_Auto.run()\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "Blue" ( "from bw_tools.bw_Menu.color import wf_Blue\nwf_Blue.run()\n" )
+        -mip 0
+        -mi "Red" ( "from bw_tools.bw_Menu.color import wf_Red\nwf_Red.run()\n" )
+        -mip 1
+        -mi "Yellow" ( "from bw_tools.bw_Menu.color import wf_Yellow\nwf_Yellow.run()\n" )
+        -mip 2
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create a control obj" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "controls" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Ctrl" 
+        -overlayLabelColor 1 1 1 
+        -overlayLabelBackColor 0 0 0 0 
+        -image "bw_ctrls.png" 
+        -image1 "bw_ctrls.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from bw_tools.bw_Menu.rig import make_ctrls\nmake_ctrls.run()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+} 
