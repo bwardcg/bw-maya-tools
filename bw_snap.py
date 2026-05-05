@@ -86,7 +86,7 @@ class Snap():
         get a name that includes the root namespace
         """
         if obj:
-            util.getName(obj)
+            name = util.getName(obj)
         else:
             name = "null"
         return name

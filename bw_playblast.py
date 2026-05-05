@@ -1,6 +1,7 @@
 import os
 import glob
 import subprocess
+import shutil
 import maya.cmds as cmds
 
 def playblast_to_mp4(
@@ -12,7 +13,9 @@ def playblast_to_mp4(
         percent=100,
         offscreen=True,
         clear_temp=True,
-        use_time_slider_or_sel=True):
+        use_time_slider_or_sel=True,
+        step=1,
+        image_type="jpg"):
     """
     Playblast current time range (or selected range) to JPGs and encode to MP4 via ffmpeg.
 
@@ -25,6 +28,8 @@ def playblast_to_mp4(
         offscreen (bool): Use offscreen rendering.
         clear_temp (bool): Remove temp JPGs afterwards.
         use_time_slider_or_sel (bool): If True, use selected time range if any, otherwise time slider.
+        step (int): Hold frames by this amount to effectively lower the fps.
+        image_type (str): Type of image to playblast (e.g. 'jpg', 'png').
     """
 
     # Determine start/end frame
@@ -67,35 +72,61 @@ def playblast_to_mp4(
 
     # Optionally clean temporary images
     if clear_temp:
-        for f in glob.glob(os.path.join(temp_dir, f"{img_name}.*.jpg")):
+        for f in glob.glob(os.path.join(temp_dir, f"{img_name}.*.{image_type}")):
             try:
                 os.remove(f)
             except OSError:
                 pass
 
+    if image_type.lower() == "png":
+        # Ensure Maya viewport background is transparent for RGBA PNGs
+        try:
+            cmds.setAttr("hardwareRenderingGlobals.transparentState", 1)
+        except Exception:
+            pass
+
+    playblast_kwargs = {
+        "filename": img_base,
+        "forceOverwrite": True,
+        "format": "image",
+        "compression": image_type,
+        "quality": quality,
+        "viewer": False,
+        "showOrnaments": False,
+        "widthHeight": (width, height),
+        "percent": percent,
+        "offScreen": offscreen
+    }
+
+    if step > 1:
+        # Calculate the actual frames we need to evaluate
+        unique_frames = sorted(list(set([start + ((f - start) // step) * step for f in range(start, end + 1)])))
+        playblast_kwargs["frame"] = unique_frames
+        playblast_kwargs["rawFrameNumbers"] = True
+    else:
+        playblast_kwargs["startTime"] = start
+        playblast_kwargs["endTime"] = end
+
     # Do the playblast to JPG sequence
-    cmds.playblast(
-        filename=img_base,
-        forceOverwrite=True,
-        format="image",
-        compression="jpg",
-        quality=quality,
-        startTime=start,
-        endTime=end,
-        viewer=False,
-        showOrnaments=False,
-        widthHeight=(width, height),
-        percent=percent,
-        offScreen=offscreen
-    )
+    cmds.playblast(**playblast_kwargs)
+
+    # Fill in the held frames by copying the stepped frames
+    if step > 1:
+        for f in range(start, end + 1):
+            snapped = start + ((f - start) // step) * step
+            if f != snapped:
+                src = f"{img_base}.{snapped:04d}.{image_type}"
+                dst = f"{img_base}.{f:04d}.{image_type}"
+                if os.path.exists(src) and not os.path.exists(dst):
+                    shutil.copy2(src, dst)
 
     # ffmpeg output mp4 path
     if output_mp4 is None:
         output_mp4 = os.path.join(pb_dir, f"{scene_name}_playblast.mp4")
 
     # Build ffmpeg input pattern:
-    # If Maya produced playblast.####.jpg with 4‑digit padding, use %04d
-    ffmpeg_input = os.path.join(temp_dir, f"{img_name}.%04d.jpg")
+    # If Maya produced playblast.####.ext with 4‑digit padding, use %04d
+    ffmpeg_input = os.path.join(temp_dir, f"{img_name}.%04d.{image_type}")
 
     # ffmpeg command
     ffmpeg_cmd = [
